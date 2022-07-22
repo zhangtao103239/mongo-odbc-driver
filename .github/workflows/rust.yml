@@ -1,0 +1,29 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "master" ]
+  
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Release
+      run: cargo build --relase
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        # Artifact name
+        name: mongo-odbc-driver# optional, default is artifact
+        # A file, directory or wildcard pattern that describes what to upload
+        path: ./target/release/**
